@@ -44,7 +44,7 @@ if [ "$HOSTNAME" == "$HOST1" ] || [ "$HOST2" ]; then
                         exit 0
                 else
                         echo -e "${FINISHED}INFO #1 -- Current local $BRANCH branch is up to date with the latest remote $BRANCH branch. Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH.${NOCOLOR}"
-			                  #Send EMAIL using SENDMAIL for INFO notification
+			#Send EMAIL using SENDMAIL for INFO notification
                         echo -e "Subject:SMART Monitor Warning Report \n\n $NOTICE Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH" | $SEND -F $FROM -f $FROM -t $TO
                         echo -e "${FINISHED}Time: $DT ${NOCOLOR}"
 			echo
@@ -63,7 +63,7 @@ if [ "$HOSTNAME" == "$HOST1" ] || [ "$HOST2" ]; then
                                 exit 0
                         else
                                 echo -e "${FINISHED}INFO #1 -- Current local $BRANCH branch is up to date with the latest remote $BRANCH branch. Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH.${NOCOLOR}"
-				                        #Send EMAIL using SENDMAIL for INFO notification
+				#Send EMAIL using SENDMAIL for INFO notification
                                 echo -e "Subject:SMART Monitor Warning Report \n\n $NOTICE Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH" | $SEND -F $FROM -f $FROM -t $TO
                                 echo -e "${FINISHED}Time: $DT ${NOCOLOR}"
 				echo
