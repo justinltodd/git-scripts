@@ -14,6 +14,7 @@ SEND="/usr/sbin/sendmail"
 ERROR_MESSAGE="WARNING #1 -- $HOSTNAME current branch is not up to date with latest $BRANCH branch."
 NOTICE="INFO #1 -- $HOSTNAME current branch is up to date with the latest $BRANCH branch."
 ABORT_MESSAGE="WARNING #1 -- $HOSTNAME not on Production Branch. Aborting hash check!"
+HOST_ERROR="WARNING #1 -- Script doesn't include this hostname $HOSTNAME. Aborting hash check!"
 HOST1="hostname.example.com"
 HOST2="hostname.example.com"
 HOST3="hostname.example.com"
@@ -27,6 +28,7 @@ echo -e ${ACTION}Checking Git repo
 echo -e =======================${NOCOLOR}
 echo
 
+# GET LOCAL AND REMOTE HASH values for BRANCHES
 LOCALHASH=$(git show-ref --heads --hash refs/heads/$BRANCH)
 REMOTEHASH=$(git ls-remote origin -h refs/heads/$BRANCH | awk '{print $1}')
 
@@ -38,14 +40,14 @@ if [ "$HOSTNAME" == "$HOST1" ] || [ "$HOST2" ]; then
                 if [ "$LOCALHASH" != "$REMOTEHASH" ]; then
                         echo -e "${ERROR}WARNING #1 -- Current branch is not up to date with the lastest remote $BRANCH branch. Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH.${NOCOLOR}"
                         #Send EMAIL using SENDMAIL for WARNING notification
-                        echo -e "Subject:SMART Monitor Warning Report \n\n $ERROR_MESSAGE Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH" | $SEND -F $FROM -f $FROM -t $TO
+                        echo -e "Subject:Monitor Warning Report \n\n $ERROR_MESSAGE Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH" | $SEND -F $FROM -f $FROM -t $TO
                         echo -e "${FINISHED}Time: $DT ${NOCOLOR}"
 			echo
                         exit 0
                 else
                         echo -e "${FINISHED}INFO #1 -- Current local $BRANCH branch is up to date with the latest remote $BRANCH branch. Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH.${NOCOLOR}"
 			#Send EMAIL using SENDMAIL for INFO notification
-                        echo -e "Subject:SMART Monitor Warning Report \n\n $NOTICE Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH" | $SEND -F $FROM -f $FROM -t $TO
+                        echo -e "Subject:Monitor Warning Report \n\n $NOTICE Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH" | $SEND -F $FROM -f $FROM -t $TO
                         echo -e "${FINISHED}Time: $DT ${NOCOLOR}"
 			echo
                 fi
@@ -57,26 +59,30 @@ if [ "$HOSTNAME" == "$HOST1" ] || [ "$HOST2" ]; then
                         if [ "$LOCALHASH" != "$REMOTEHASH" ]; then
                                 echo -e "${ERROR}WARNING #1 -- Current branch is not up to date with the lastest remote $BRANCH branch. Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH.${NOCOLOR}"
                                 #Send EMAIL using SENDMAIL for WARNING notification
-                                echo -e "Subject:SMART Monitor Warning Report \n\n $ERROR_MESSAGE Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH" | $SEND -F $FROM -f $FROM -t $TO
+                                echo -e "Subject:Monitor Warning Report \n\n $ERROR_MESSAGE Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH" | $SEND -F $FROM -f $FROM -t $TO
                                 echo -e "${FINISHED}Time: $DT ${NOCOLOR}"
 				echo
                                 exit 0
                         else
                                 echo -e "${FINISHED}INFO #1 -- Current local $BRANCH branch is up to date with the latest remote $BRANCH branch. Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH.${NOCOLOR}"
 				#Send EMAIL using SENDMAIL for INFO notification
-                                echo -e "Subject:SMART Monitor Warning Report \n\n $NOTICE Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH" | $SEND -F $FROM -f $FROM -t $TO
+                                echo -e "Subject:Monitor Warning Report \n\n $NOTICE Remote $BRANCH: $REMOTEHASH -- Local $BRANCH: $LOCALHASH" | $SEND -F $FROM -f $FROM -t $TO
                                 echo -e "${FINISHED}Time: $DT ${NOCOLOR}"
 				echo
                         fi
                 else
-                        echo -e "This isn't the right hosts to run the script"
+			#ABORT if hostname doesn't equal HOSTS1,2,3, variable
+			echo -e "$HOST_ERROR"
+                        #Send EMAIL using SENDMAIL for WARNING notification
+                        echo -e "Subject:Monitor Warning Report \n\n $HOST_ERROR" | $SEND -F $FROM -f $FROM  -t $TO
+                        echo -e "${FINISHED}Time: $DT ${NOCOLOR}"
                         exit 0
                 fi
         else
                 #ABORT if not branch isn't either master or propduction
                 echo -e "${ERROR}Not on the correct Branch. Aborting. ${NOCOLOR}"
                 #Send EMAIL using SENDMAIL for ABORT notification
-                echo -e "Subject:SMART Monitor Warning Report \n\n $ABORT_MESSAGE" | $SEND -F $FROM -f $FROM  -t $TO
+                echo -e "Subject:Monitor Warning Report \n\n $ABORT_MESSAGE" | $SEND -F $FROM -f $FROM  -t $TO
                 echo -e "${FINISHED}Time: $DT ${NOCOLOR}"
 		echo
                 exit 0
