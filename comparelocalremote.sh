@@ -69,7 +69,7 @@ if [ "$HOSTNAME" == "$HOST1" ] || [ "$HOST2" ]; then
 				echo
                         fi
                 else
-                        echo -e "This is the right host to run the script"
+                        echo -e "This isn't the right hosts to run the script"
                         exit 0
                 fi
         else
