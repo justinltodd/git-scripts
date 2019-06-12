@@ -13,7 +13,7 @@ DT=$(date '+%F %H:%M:%S')
 
 #VARIABLES FOR REPORTING/BRANCH/GIT DIR LOCATION/HOSTS
 DIRECTORY="/var/www/<website>/"
-FROM="admin@hostname.com.com"
+FROM="admin@hostname.com"
 TO="admin@hostname.com"
 SEND="/usr/sbin/sendmail"
 ERROR_MESSAGE="WARNING #1 -- $HOSTNAME current branch is not up to date with latest $BRANCH branch."
