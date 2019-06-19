@@ -3,5 +3,5 @@ If the LOCAL branch isn't in sync with REMOTE branch HASH then it will send out 
 
 
 
-# comparebranches.sh versions 1.5
+# comparebranches.sh v1.5
 # This is the older version without functions. comparelocalremote.sh
