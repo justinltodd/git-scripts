@@ -26,8 +26,8 @@ HOST_ERROR="WARNING #1 -- Script doesn't include this hostname $HOSTNAME. Aborti
 PROD_BRANCH="production"
 MASTER_BRANCH="master"
 # DEPLOY CLIENT AND SECRET KEY
-CLIENT_ID="secret"
-SECRET="secret key"
+CLIENT_ID="bitbucket Client ID"
+SECRET="bitbucket secret key"
 DIR="/var/www/repo/"
 LOGFILE="/var/log/deployment.log"
 
