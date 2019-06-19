@@ -1,7 +1,7 @@
 # Script compares LOCAL and REMOTE branch hash values to make sure there are in sync.
-If they LOCAL branch isn't in sync with REMOTE branch HASH then it will send out alert via SENDMAIL to designated email.
-It checks to make sure that the current local repository is on the correct branch. If not, then it will checkout the proper branch.
+If the LOCAL branch isn't in sync with REMOTE branch HASH then it will send out alert via SENDMAIL to designated email. Script will compare the hash values and if it doesn't match will git reset. It will do a git pull as well. Can be configured as a cro.
 
 
-# This is newer version with functions and better logic. comparebranches.sh
+
+# comparebranches.sh versions 1.5
 # This is the older version without functions. comparelocalremote.sh
