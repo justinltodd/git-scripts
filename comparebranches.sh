@@ -152,7 +152,7 @@ echo -e "${READY}Git Pulling $BRANCH at: $DT ${NOCOLOR}"
 echo -e "${ACTION}==================================================${NOCOLOR}"
 echo -e "${NOCOLOR}"
 echo -e "${READY}"
-#git pull origin $BRANCH || { echo "command failed"; exit 1; }
+
 if ! git pull origin $BRANCH; then
 	echo -e "${NOCOLOR}"
 	echo -e "${ACTION}==================================================${NOCOLOR}"
@@ -166,11 +166,6 @@ else
 	echo -e "${FINISHED}Git Pull of $BRANCH Done at: $DT ${NOCOLOR}"
 	echo
 fi
-#echo -e "${NOCOLOR}"
-#echo -e "${ACTION}==================================================${NOCOLOR}"
-#echo -e "${FINISHED}Git Pull of $BRANCH Done at: $DT ${NOCOLOR}"
-#echo
-}
 
 COMPARE () {
         if [[ "$LOCALHASH" != "$REMOTEHASH" ]]; then
@@ -179,7 +174,6 @@ COMPARE () {
 		WARN_EMAIL
         else
 		INFO_EMAIL
-		GIT_PULL
         fi
 }
 
@@ -202,6 +196,7 @@ CHECK_MASTER_BRANCH () {
 	if [[ "$BRANCH" == "$MASTER_BRANCH" ]]; then
                 echo -e "${ACTION}Current branch is: $BRANCH ${NOCOLOR}"
                 echo
+		GIT_PULL
 		HASH
                 COMPARE
         else
@@ -232,6 +227,7 @@ CHECK_PROD_BRANCH () {
 	if [[ "$BRANCH" == "$PROD_BRANCH" ]]; then
 		echo -e "${ACTION}Current branch is: $BRANCH ${NOCOLOR}"
 		echo
+		GIT_PULL
 		HASH
 		COMPARE
 	else
